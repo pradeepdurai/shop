@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-uuidv4();
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
@@ -42,7 +41,7 @@ var userSchema = new mongoose.schema({
         type: Array,
         default: []
     }
-});
+}, {timestamps : true});
 
 userSchema.virtual("password")
 .set(function(password){
@@ -67,4 +66,4 @@ userSchema.methods = {
         }
     }
 }
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);
