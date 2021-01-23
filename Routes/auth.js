@@ -1,9 +1,13 @@
-const express = require("express")
 
-const router = express.Router();
 
-const {signIn} = require("../Controllers/auth");
+const express = require("express");
+const { body, validationResult } = require('express-validator');
 
-router.get("/signin",signIn)
+var router = express.Router();
+
+const {signUp} = require("../Controllers/auth");
+
+router.post("/signup",[body('email').isEmail()],signUp);
+
 
 module.exports = router;
