@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 
 const authRoutes = require("./Routes/auth");
-
+const userRoutes = require("./Routes/user");
 
 mongoose.connect(process.env.DATABASES,{
     useNewUrlParser:true, 
@@ -22,7 +22,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/api", authRoutes)
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
     
 app.get('/', (req, res) => {
     return res.send("Hi");
