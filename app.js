@@ -11,6 +11,7 @@ const authRoutes = require("./Routes/auth");
 const userRoutes = require("./Routes/user");
 const categoryRoutes = require("./Routes/category");
 const productRoutes = require("./Routes/product");
+const orderRoutes = require("./Routes/order");
 
 mongoose.connect(process.env.DATABASES,{
     useNewUrlParser:true, 
@@ -28,6 +29,8 @@ app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
+app.use("/api", orderRoutes);
+
 
     
 app.get('/', (req, res) => {

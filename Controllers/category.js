@@ -14,11 +14,12 @@ exports.getCategoryById = (req, res, next, id) => {
 }
 
 exports.createCategory = (req, res) => {
-    
+
     const category = new Category(req.body);
     category.save((err, category) => {
         // console.log(err)
         if (err) {
+            console.log(err)
             return res.status(400).json({
                 error: " Not able to save category"
             })
@@ -32,7 +33,7 @@ exports.getCategory = (req, res)=>{
 }
 
 exports.getAllCategory = (req,res) =>{
-    Category.find().exec(err,categories =>{
+    Category.find().exec((err,categories) =>{
         if(err){
             return res.status(400).json({
                 error: "Category not found"

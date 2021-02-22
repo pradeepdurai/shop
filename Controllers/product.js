@@ -4,6 +4,7 @@ const formidable = require("formidable");
 
 const _ = require("lodash");
 const fs = require("fs");
+const product = require("../Models/product");
 
 exports.getProductById = (req, res, next, id) => {
     Product.findById({ _id: id }).exec((err, product) => {
@@ -78,23 +79,23 @@ exports.photo = (req, res) => {
 
 // delete product
 
-exports.deleteProduct = (req,res) => {
+exports.deleteProduct = (req, res) => {
     let product = req.product;
     product.remove((err, deletedProduct) => {
-        if(err){
+        if (err) {
             return res.status(400).json({
-                error : "Failed to Delete the product"
+                error: "Failed to Delete the product"
             })
         }
         res.json({
-            message : "Deletion was a success",
-            deletedProduct 
+            message: "Deletion was a success",
+            deletedProduct
         })
     })
 
 }
 
-exports.updateProduct = (req,res)=>{
+exports.updateProduct = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, file) => {
@@ -129,3 +130,35 @@ exports.updateProduct = (req,res)=>{
         });
     });
 }
+
+exports.getAllProducts = (req, res) => {
+    let limit = req.query.limit ? parseInt(eq.query.limit) : 8;
+    let sortBy = req.query.sortBy ? req.query.sortBy : "_id"
+    Product.find()
+        .select("-photo")
+        .populate("category")
+        .sort([[sortBy, "asc"]])
+        .limit(limit)
+        .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "No Product Found"
+                })
+            }
+            return res.json(products)
+        })
+}
+
+
+
+exports.getAllUniqueCategories = (req,res) => {
+    Product.distinct("category", {}, (err, category) =>{
+        if(err){
+            return res.status(400).json({
+                error : "No Category found"
+            })
+        }
+        res.json(category)
+    })
+}
+
