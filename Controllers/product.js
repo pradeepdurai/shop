@@ -56,7 +56,7 @@ exports.createProduct = (req, res) => {
         }
         // Save to DB
         //const product = new Product(req.body)
-        console.log(product.productName)
+        //console.log(product.productName)
         product.save((err, product) => {
             if (err) {
                 return res.status(400).json({
